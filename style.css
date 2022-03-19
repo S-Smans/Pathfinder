@@ -5,8 +5,6 @@ body {
 .container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 .header {
@@ -16,19 +14,39 @@ body {
     margin-bottom: 50px;
 }
 
+.main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.startPoint {
+  width: 50px;
+  height: 50px;
+  background-color: blue;
+}
+
 h1 {
     font-size: 64px;
     color: white;
 }
 
-.start {
-    margin-right: 150px
+.tools {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 600px;
+  height: 400px;
 }
 
 .grid {
     display: grid;
     width: 600px;
     height: 600px;
+}
+
+.info {
+  width: 600px;
+  height: 600px;
 }
 
 .col {
@@ -51,7 +69,7 @@ h1 {
 button {
   background-color: #fbeee0;
   border: 2px solid #422800;
-  border-radius: 30px;
+  border-radius: 10px;
   box-shadow: #422800 4px 4px 0 0;
   color: #422800;
   cursor: pointer;

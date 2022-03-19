@@ -203,3 +203,9 @@ for (let path = 0; path < result.length; path++) {
     document.getElementById(pathCoord).style.backgroundColor = "yellow";
 }
 console.log(grid.elementsCoord)
+
+// Kad sākuma vai beiga punkti tiek paņemti
+function drag(event) {
+    // paņem vilktā elementa className
+    event.dataTransfer.setData("text", event.target.className)
+} 
