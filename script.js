@@ -94,7 +94,8 @@ class Grid {
                         previous[neighbours[elementCoord][i]] = elementCoord;
                     }
                 }
-            } catch {
+            } catch (e){
+                alert(e + ".\n Koordinātes nav iespējamas.");
                 return false;
             }
         }
@@ -111,8 +112,6 @@ const nodeCount = 9;
 // Pievieno pareizo kolonnu skaitu
 gridDiv.style.gridTemplateColumns = `repeat(${Math.sqrt(nodeCount)}, 1fr)`;
 
-// Objekts kas satur visus elementus pareizajās kollonās un rindās
-//let nodesObject = {};
 let grid = new Grid();
 
 // Izveido režģā elementus
@@ -138,17 +137,19 @@ for (let col = 1; col <= Math.sqrt(nodeCount); col++) {
         divCol.append(divRow);
     }
 
-    // Saglabā šīs kollonas iterācijas elementus
+    // Saglabā šīs kollonas iterācijas elementu koordinātes
     grid.addElement(nodeCoordinates);
 
-    //nodesObject["col"+col] = nodeCoordinates;
+    // Ievada kollonu ar rindām dokumenta režģī
     gridDiv.append(divCol);
 }
+
+// Iespējamie soļi kur elementa kaimiņi varētu atrasties
 let possibleMoves = [
-    [-1, 0], // left
-    [0, 1], // down
-    [1, 0], // right
-    [0, -1], // up
+    [-1, 0], // kreisi
+    [0, 1], // leju
+    [1, 0], // labi
+    [0, -1], // augšu
 ];
 
 // iedod katram elementam kaimiņus
@@ -171,7 +172,7 @@ for (let col = 0; col < Math.sqrt(nodeCount); col++) {
     }
 }
 
-// Pārbauda vai koordinātes ir vertices masīvā
+// Pārbauda vai koordinātes ir iespējamas uz režģa
 function isCoordAvailable(array, coord) {
     var item_as_string = JSON.stringify(coord);
 
@@ -193,7 +194,7 @@ function arrayEquals(arrayOne, arrayTwo) {
 }
 
 // Dabū īsāko ceļu
-let result = grid.breadthFirstSearch([2, 2], [1, 1]);
+let result = grid.breadthFirstSearch([2, 3], [1, 1]);
 console.log(result);
 
 // Iekrāso isāko ceļu
@@ -201,3 +202,4 @@ for (let path = 0; path < result.length; path++) {
     let pathCoord = result[path].join("-");
     document.getElementById(pathCoord).style.backgroundColor = "yellow";
 }
+console.log(grid.elementsCoord)
