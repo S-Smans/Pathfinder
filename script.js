@@ -1,4 +1,4 @@
-// Režģis, kas atrodas
+// Atsevišķš režģis, kas atrodas loģiskājā daļā
 class Grid {
     constructor() {
         // satur visus elementu koordinātes uz režģa
