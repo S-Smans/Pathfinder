@@ -19,11 +19,17 @@
         </div>
         <div class="main">
             <div class="tools">
-                <div class="startPoint" id="1"draggable="true" ondragstart="drag(event)"></div>
+                <h2>Sākuma punkts</h2>
+                <div class="startPoint" draggable="true" ondragstart="drag(event)"></div>
+                <div class="endPoint" draggable="true" ondragstart="drag(event)"></div>
+                <h2>Beigu punkts</h2>
+                <p class="value-text"><span class="value"></span></p>
+                <input type="range" class="slider" max="20" min="4">
+                <button class="grid-size">Režģa lielums</button>
             </div>
             <div class="grid"></div>
             <div class="info">
-
+                <h1>Velc punkta krāsu uz režģa</h1>
             </div>
         </div>
     </div>
