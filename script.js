@@ -131,6 +131,10 @@ function createGridInDocument() {
             // ieviest iespēju vilkt un nomest elementus
             divRow.addEventListener("dragover", (e) => allowDrop(e));
             divRow.addEventListener("drop", (e) => drop(e));
+
+            // uzspiežot uz elementa pievieno sķērsli
+            divRow.addEventListener("click", (e) => addWall(e));
+
             divCol.append(divRow);
         }
 
@@ -140,42 +144,17 @@ function createGridInDocument() {
         // Ievada kollonu ar rindām dokumenta režģī
         gridDiv.append(divCol);
     }
-
-    // Iespējamie soļi kur elementa kaimiņi varētu atrasties
-    let possibleMoves = [
-        [-1, 0], // kreisi
-        [0, 1], // leju
-        [1, 0], // labi
-        [0, -1], // augšu
-    ];
-
-    // iedod katram elementam kaimiņus
-    for (let col = 0; col < Math.sqrt(nodeCount); col++) {
-        for (let row = 0; row < Math.sqrt(nodeCount); row++) {
-            for (let move = 0; move < possibleMoves.length; move++) {
-                // aprēķina kaimiņa koordinātes saskaitot esošo elementu ar iespējamiem kaimiņiem
-                let coord = possibleMoves[move].map(function (num, idx) {
-                    return num + grid.elementsCoord[col][row][idx];
-                });
-
-                // Pārbauda vai koordinātes eksistē uz režģa
-                for (let i = 0; i < grid.elementsCoord.length; i++) {
-                    if (isCoordAvailable(grid.elementsCoord[i], coord)) {
-                        // Ja eksistē elementam pievieno kaimiņa koordinātes
-                        grid.addNeighbour(col + 1 + "," + (row + 1), coord);
-                    }
-                }
-            }
-        }
-    }
 }
 
 // Pārbauda vai koordinātes ir iespējamas uz režģa
 function isCoordAvailable(array, coord) {
-    var item_as_string = JSON.stringify(coord);
+    const item_as_string = JSON.stringify(coord);
 
-    var contains = array.some(function (ele) {
-        return JSON.stringify(ele) === item_as_string;
+    const contains = array.some(function (ele) {
+        return (
+            JSON.stringify(ele) === item_as_string &&
+            document.getElementById(ele.toString()).className != "row blocked"
+        );
     });
 
     return contains;
@@ -206,16 +185,29 @@ function allowDrop(event) {
 // Darbība kad sākuma/beigu punkts tiek nomest uz režģā elementa
 function drop(event) {
     event.preventDefault();
+
+    // Saglabā vilktā elementa klasi
     let data = event.dataTransfer.getData("text");
 
+    // Ja vilktais elements ir sākuma punkts
     if (data == "startPoint") {
         event.target.style.backgroundColor = "blue";
-        event.target.className += " start";
+        event.target.className = "row start";
     }
 
+    // Ja vilktais elements ir beigu punkts
     if (data == "endPoint") {
         event.target.style.backgroundColor = "green";
-        event.target.className += " end";
+        event.target.className = "row end";
+    }
+}
+
+// Pievieno šķērsli
+function addWall(event) {
+    if (event.target.className != "row blocked") {
+        event.target.className = "row blocked";
+    } else {
+        event.target.className = "row";
     }
 }
 
@@ -237,8 +229,49 @@ function findPoints() {
     return points;
 }
 
+// iedod katram elementam kaimiņus
+function addNeighbours() {
+    let startTime = performance.now();
+    // Iespējamie kaimiņa koordinātes
+    let possibleNeighbours = [
+        [1, 0], // labi
+        [-1, 0], // kreisi
+        [0, -1], // augšu
+        [0, 1], // leju
+    ];
+
+    // iedod katram elementam kaimiņus
+    for (let col = 0; col < Math.sqrt(nodeCount); col++) {
+        for (let row = 0; row < Math.sqrt(nodeCount); row++) {
+            for (let move = 0; move < possibleNeighbours.length; move++) {
+                // aprēķina kaimiņa koordinātes saskaitot esošo elementu ar iespējamiem kaimiņiem
+                let coord = possibleNeighbours[move].map(function (num, idx) {
+                    return num + grid.elementsCoord[col][row][idx];
+                });
+
+                // Pārbauda vai koordinātes eksistē uz režģa
+                for (let i = 0; i < grid.elementsCoord.length; i++) {
+                    //console.log(grid.elementsCoord[i]);
+                    if (isCoordAvailable(grid.elementsCoord[i], coord)) {
+                        // Ja eksistē elementam pievieno kaimiņa koordinātes
+                        grid.addNeighbour(col + 1 + "," + (row + 1), coord);
+                    }
+                }
+            }
+        }
+    }
+    let endTime = performance.now();
+
+    console.log(
+        `Call to addNeighbours took ${endTime - startTime} milliseconds`
+    );
+}
+
 // Sāk meklēt isāko ceļu
 function start() {
+    // Vispirms atrod iespējamos elementa kaimiņus
+    addNeighbours();
+
     let points = findPoints();
 
     let start = points["start"];
@@ -261,19 +294,19 @@ function deleteGrid() {
 
     // izdzēš loģiskā daļas elementu sastāvu
     for (const key in grid) {
-        if(Array.isArray(grid[key])) {
+        if (Array.isArray(grid[key])) {
             grid[key] = [];
         } else {
             emptyObject(grid[key]);
         }
-      }
+    }
 }
 
 // Noņem visa objekta elementus
 function emptyObject(obj) {
     for (const key in obj) {
         delete obj[key];
-      }
+    }
 }
 
 // atiestatīt režģi
@@ -282,11 +315,10 @@ function resetGrid() {
     nodeCount = slider.value * slider.value;
     gridDiv.style.gridTemplateColumns = `repeat(${Math.sqrt(nodeCount)}, 1fr)`;
     createGridInDocument();
-    console.log(grid);
 }
 
-const slider = document.querySelector('.slider');
-const value = document.querySelector('.value');
+const slider = document.querySelector(".slider");
+const value = document.querySelector(".value");
 
 // parāda slider vērtību
 value.innerText = slider.value + "x" + slider.value;
@@ -319,10 +351,9 @@ window.addEventListener("load", () => {
         resetGrid();
     });
 
-    slider.addEventListener('input', () => {
+    slider.addEventListener("input", () => {
         value.innerText = slider.value + "x" + slider.value;
     });
 
     createGridInDocument();
 });
-

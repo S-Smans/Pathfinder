@@ -66,6 +66,10 @@ h1 {
     background-color: white;
 }
 
+.row.blocked {
+  background-color: gray;
+}
+
 .row {
     border: solid 1px black;
     background-color: white;
