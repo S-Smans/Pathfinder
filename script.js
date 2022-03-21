@@ -75,7 +75,11 @@ class Grid {
             
             // Ja elementa koordinātes ir vienādas ar beigu punktu koordinātēm ceļs ir atrasts
             if (arrayEquals(elementCoord, endNode)) {
-                return createPath(startNode, endNode, previous);
+                return {
+                    path: createPath(startNode, endNode, previous), 
+                    discovered: discovered, 
+                    distance: distance
+                };
             }
 
             // Ja pārbaudītais elementCoord ir undefined atgriez false
@@ -90,7 +94,7 @@ class Grid {
                         queue.push(neighbours[elementCoord][i]);
                         // pievieno elementu attālumu no sākuma punkta
                         distance[neighbours[elementCoord][i]] =
-                            distance[elementCoord] + 1;
+                        distance[elementCoord] + 1;
                         // pievieno elementCoord kā tas kas atklāja kaimiņu
                         previous[neighbours[elementCoord][i]] = elementCoord;
                     }
@@ -100,7 +104,7 @@ class Grid {
                 return false;
             }
         }
-
+        console.log("while loop crash")
         return false;
     }
 }
@@ -282,11 +286,38 @@ function start() {
     let end = points["end"];
 
     let result = grid.breadthFirstSearch(start, end);
+    let path = result["path"];
+    // masīvu reverse, jo tad ceļš būvējas no sākuma punkta nevis no beigu punkta
+    path.reverse();
+    let discovered = result["discovered"];
+    colorDiscovered(discovered, path, end)
+}
 
-    // Iekrāso isāko ceļu
-    for (let path = 0; path < result.length; path++) {
-        let pathCoord = result[path].join(",");
-        document.getElementById(pathCoord).style.backgroundColor = "yellow";
+// Iekrāso katru elementu ko algoritms pārbaudīja
+function colorDiscovered(discovered, path, end) {
+    let i = 1;
+    let color = "red";
+    console.log(end.toString())
+    Object.keys(discovered).forEach(function(coord) {
+        i++
+        setTimeout(() => {
+            document.getElementById(coord).style.backgroundColor = color;
+            // Ja koordinātes ir vienādas ar beigu punktu beidz iekrāsot pārbaudītos elementus
+            if(coord === end.toString()) {
+                colorPath(path);
+                color = "white";
+            }
+        },50 * i);
+    }); 
+}
+
+// Iekrāso isāko ceļu
+function colorPath(path) {
+    for (let i = 0; i < path.length; i++) {
+        setTimeout(() => {
+            let pathCoord = path[i].join(",");
+            document.getElementById(pathCoord).style.backgroundColor = "yellow";
+        }, 50 * i);
     }
 }
 
