@@ -72,7 +72,7 @@ class Grid {
         while (queue.length) {
             // Paņem elementa koordinātes
             let elementCoord = queue.shift();
-
+            
             // Ja elementa koordinātes ir vienādas ar beigu punktu koordinātēm ceļs ir atrasts
             if (arrayEquals(elementCoord, endNode)) {
                 return createPath(startNode, endNode, previous);
@@ -151,6 +151,7 @@ function isCoordAvailable(array, coord) {
     const item_as_string = JSON.stringify(coord);
 
     const contains = array.some(function (ele) {
+        loopCount++
         return (
             JSON.stringify(ele) === item_as_string &&
             document.getElementById(ele.toString()).className != "row blocked"
@@ -211,10 +212,11 @@ function addWall(event) {
     }
 }
 
+
 // Atrod sākuma un beigu punktu režģī
 function findPoints() {
     let points = [];
-
+    
     for (let col = 0; col < Math.sqrt(nodeCount); col++) {
         for (let row = 0; row < Math.sqrt(nodeCount); row++) {
             let element = grid.elementsCoord[col][row].toString();
@@ -229,15 +231,17 @@ function findPoints() {
     return points;
 }
 
+let loopCount = 0;
+
 // iedod katram elementam kaimiņus
 function addNeighbours() {
     let startTime = performance.now();
     // Iespējamie kaimiņa koordinātes
     let possibleNeighbours = [
+        [0, 1], // leju
         [1, 0], // labi
         [-1, 0], // kreisi
         [0, -1], // augšu
-        [0, 1], // leju
     ];
 
     // iedod katram elementam kaimiņus
@@ -251,7 +255,6 @@ function addNeighbours() {
 
                 // Pārbauda vai koordinātes eksistē uz režģa
                 for (let i = 0; i < grid.elementsCoord.length; i++) {
-                    //console.log(grid.elementsCoord[i]);
                     if (isCoordAvailable(grid.elementsCoord[i], coord)) {
                         // Ja eksistē elementam pievieno kaimiņa koordinātes
                         grid.addNeighbour(col + 1 + "," + (row + 1), coord);
@@ -260,6 +263,7 @@ function addNeighbours() {
             }
         }
     }
+    console.log(loopCount)
     let endTime = performance.now();
 
     console.log(
