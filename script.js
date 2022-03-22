@@ -193,18 +193,32 @@ function drop(event) {
 
     // Saglabā vilktā elementa klasi
     let data = event.dataTransfer.getData("text");
-
     // Ja vilktais elements ir sākuma punkts
     if (data == "startPoint") {
+        removePoint(startPoint);
+        startPoint = event.target.id;
         event.target.style.backgroundColor = "blue";
         event.target.className = "row start";
     }
 
     // Ja vilktais elements ir beigu punkts
     if (data == "endPoint") {
+        removePoint(endPoint);
+        endPoint = event.target.id;
         event.target.style.backgroundColor = "green";
         event.target.className = "row end";
     }
+}
+
+// noņem iepriekšējo sākuma punktu
+function removePoint(point) {
+    if (point === null) {
+        return;
+    }
+    pointDiv = document.getElementById(point);
+
+    pointDiv.style.backgroundColor = "white"
+    pointDiv.className = "row";
 }
 
 // Pievieno šķērsli
@@ -277,6 +291,8 @@ function addNeighbours() {
 
 // Sāk meklēt isāko ceļu
 function start() {
+    // aizliedz jebkādu lietotāja darbību uz režģā
+    document.querySelector(".grid").style.pointerEvents = "none";
     // Vispirms atrod iespējamos elementa kaimiņus
     addNeighbours();
 
@@ -297,6 +313,7 @@ function start() {
 function colorDiscovered(discovered, path, end) {
     let i = 1;
     let color = "red";
+    running = true;
     console.log(end.toString())
     Object.keys(discovered).forEach(function(coord) {
         i++
@@ -319,6 +336,7 @@ function colorPath(path) {
             document.getElementById(pathCoord).style.backgroundColor = "yellow";
         }, 50 * i);
     }
+    running = false;
 }
 
 // Izdzēš režģi
@@ -346,6 +364,7 @@ function emptyObject(obj) {
 
 // atiestatīt režģi
 function resetGrid() {
+    document.querySelector(".grid").style.pointerEvents = "auto";
     deleteGrid();
     nodeCount = slider.value * slider.value;
     gridDiv.style.gridTemplateColumns = `repeat(${Math.sqrt(nodeCount)}, 1fr)`;
@@ -354,7 +373,9 @@ function resetGrid() {
 
 const slider = document.querySelector(".slider");
 const value = document.querySelector(".value");
-
+let startPoint = null;
+let endPoint = null;
+let running = false;
 // parāda slider vērtību
 value.innerText = slider.value + "x" + slider.value;
 
@@ -379,11 +400,15 @@ window.addEventListener("load", () => {
     });
 
     reset.addEventListener("click", () => {
-        resetGrid();
+        if (running === false) {
+            resetGrid();
+        }
     });
 
     gridSize.addEventListener("click", () => {
-        resetGrid();
+        if (running === false) {
+            resetGrid();
+        }
     });
 
     slider.addEventListener("input", () => {

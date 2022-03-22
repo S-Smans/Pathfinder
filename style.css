@@ -37,6 +37,15 @@ h1 {
     color: white;
 }
 
+h2 {
+  font-size: 25px;
+  color: white;
+}
+
+li {
+  margin-top: 40px;
+}
+
 .tools {
   display: flex;
   align-items: center;
