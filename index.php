@@ -1,3 +1,7 @@
+<?php
+    include_once "db.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ceļu meklētājs</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -37,6 +42,18 @@
                         <li>Ja sākuma un beigu punkti ir uz laukuma var sākt meklēšanu</li>
                     </ul>
                 </h2>
+                <h3 id="sql">
+                    <?php
+                        $sql = "SELECT * FROM names LIMIT 1";
+                        $result = mysqli_query($conn, $sql);
+                        if (mysqli_num_rows($result) > 0) {
+                            while($row = mysqli_fetch_assoc($result)) {
+                                echo $row['name'];
+                            }
+                        }
+                    ?>
+                </h3>
+                <button id="btn">Add</button>
             </div>
         </div>
     </div>

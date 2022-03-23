@@ -417,3 +417,14 @@ window.addEventListener("load", () => {
 
     createGridInDocument();
 });
+
+//JQuery priekš sql
+$(document).ready(() => {
+    let count = 1;
+    $("#btn").click(() => {
+        count++;
+        $("#sql").load("load.php", {
+            newCount : count
+        });
+    });
+})
