@@ -135,9 +135,9 @@ function createGridInDocument() {
             // ieviest iespēju vilkt un nomest elementus
             divRow.addEventListener("dragover", (e) => allowDrop(e));
             divRow.addEventListener("drop", (e) => drop(e));
-
+            divRow.innerText = col + "," + row;
             // uzspiežot uz elementa pievieno sķērsli
-            divRow.addEventListener("click", (e) => addWall(e));
+            divRow.addEventListener("click", (e) => addWall(e.target));
 
             divCol.append(divRow);
         }
@@ -223,10 +223,10 @@ function removePoint(point) {
 
 // Pievieno šķērsli
 function addWall(event) {
-    if (event.target.className != "row blocked") {
-        event.target.className = "row blocked";
+    if (event.className != "row blocked") {
+        event.className = "row blocked";
     } else {
-        event.target.className = "row";
+        event.className = "row";
     }
 }
 
@@ -420,11 +420,33 @@ window.addEventListener("load", () => {
 
 //JQuery priekš sql
 $(document).ready(() => {
-    let count = 1;
-    $("#btn").click(() => {
-        count++;
-        $("#sql").load("load.php", {
-            newCount : count
+    $("#btn").click(() =>{
+        $.get("load.php", (data, status) =>{
+            // data satur coord datus no SQL datubāzes
+            createMaze(data);
         });
     });
 })
+
+// Novieto šķēršļus no datubāzes koordinātēm
+function createMaze(data) {
+    data = JSON.parse(data);
+    coordArray = data.split("-");
+    coordArray.forEach(coord => {
+        let coordDiv = document.getElementById(coord);
+        addWall(coordDiv)
+    });
+}
+
+document.getElementById("walls").addEventListener("click", () => {
+    console.log(getWalls());
+})
+
+function getWalls() {
+    for (let col = 0; col < Math.sqrt(nodeCount); col++) {
+        for (let row = 0; row < Math.sqrt(nodeCount); row++) {
+            let coord = grid["elementsCoord"][col][row].toString();
+            console.log(document.getElementById(coord));
+        }
+    }
+}

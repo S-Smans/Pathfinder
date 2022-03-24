@@ -43,17 +43,11 @@
                     </ul>
                 </h2>
                 <h3 id="sql">
-                    <?php
-                        $sql = "SELECT * FROM names LIMIT 1";
-                        $result = mysqli_query($conn, $sql);
-                        if (mysqli_num_rows($result) > 0) {
-                            while($row = mysqli_fetch_assoc($result)) {
-                                echo $row['name'];
-                            }
-                        }
-                    ?>
+
                 </h3>
                 <button id="btn">Add</button>
+                <button id="walls">Wall coord</button>
+                <p id="test"></p>
             </div>
         </div>
     </div>
