@@ -1,11 +1,10 @@
 <?php
     include "db.php";
 
-    $sql = "SELECT * FROM names LIMIT 1";
+    $sql = "SELECT size, coord FROM names";
     $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0) {
-        while($row = mysqli_fetch_assoc($result)) {
-            echo json_encode($row['coord']);
-        }
-    }
+
+    $coord = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    echo json_encode($coord);
 ?>

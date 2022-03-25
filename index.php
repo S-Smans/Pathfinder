@@ -9,17 +9,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ceļu meklētājs</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="script.js" defer></script>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Ceļu meklētājs</h1>
-            <div class="buttons">
-                <button class="start">Sākt</button>
-                <button class="reset">Atiestatīt</button>
+            <div class="helper"></div>
+            <div class="title">
+                <h1>Ceļu meklētājs</h1>
+                <div class="buttons">
+                    <button class="start">Sākt</button>
+                    <button class="reset">Atiestatīt</button>
+                </div>
+            </div>
+            <div class="dropdown">
+                <form action="#">
+                <label for="cars">Choose a car:</label>
+                <select name="cars" id="cars">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="opel">Opel</option>
+                    <option value="audi">Audi</option>
+                </select>
+                <br><br>
+                <input type="submit" value="Submit">
+                </form>
             </div>
         </div>
         <div class="main">

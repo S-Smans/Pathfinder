@@ -135,7 +135,6 @@ function createGridInDocument() {
             // ieviest iespēju vilkt un nomest elementus
             divRow.addEventListener("dragover", (e) => allowDrop(e));
             divRow.addEventListener("drop", (e) => drop(e));
-            divRow.innerText = col + "," + row;
             // uzspiežot uz elementa pievieno sķērsli
             divRow.addEventListener("click", (e) => addWall(e.target));
 
@@ -419,6 +418,7 @@ window.addEventListener("load", () => {
 });
 
 //JQuery priekš sql
+// dabū datus no php
 $(document).ready(() => {
     $("#btn").click(() =>{
         $.get("load.php", (data, status) =>{
@@ -430,6 +430,9 @@ $(document).ready(() => {
 
 // Novieto šķēršļus no datubāzes koordinātēm
 function createMaze(data) {
+    // datus no JSON dabū JS masīvā
+    data = JSON.parse(data);
+    console.log(data[0]["coord"])
     data = JSON.parse(data);
     coordArray = data.split("-");
     coordArray.forEach(coord => {
@@ -442,11 +445,20 @@ document.getElementById("walls").addEventListener("click", () => {
     console.log(getWalls());
 })
 
+// Dabū sķēršļu koordināted no režģā;
 function getWalls() {
+    // saglabā visas koordinātes vienā tekstā
+    let allCoord = "";
     for (let col = 0; col < Math.sqrt(nodeCount); col++) {
         for (let row = 0; row < Math.sqrt(nodeCount); row++) {
             let coord = grid["elementsCoord"][col][row].toString();
-            console.log(document.getElementById(coord));
+            if(document.getElementById(coord).className == "row blocked") {
+                allCoord += coord + "-";
+            }
         }
     }
+    // noņem pēdējo "-" simbolu
+    allCoord = allCoord.substring(0, allCoord.length - 1);
 }
+
+// kad paņem iepriekš iestatītu laukumu tam ir aktuāls elementu izmērs

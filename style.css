@@ -7,11 +7,32 @@ body {
     flex-direction: column;
 }
 
-.header {
+.title {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 50px;
+    width: 600px;
+    height: 220px;
+}
+
+.helper {
+  width: 600px;
+  height: 220px;
+}
+
+.dropdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+  height: 220px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
 }
 
 .main {
