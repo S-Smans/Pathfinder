@@ -370,11 +370,24 @@ function resetGrid() {
     createGridInDocument();
 }
 
+// Režģis izveidots no datubāzes iestatījumiem
+function customGrid(size) {
+    document.querySelector(".grid").style.pointerEvents = "auto";
+    deleteGrid();
+    nodeCount = size * size;
+    gridDiv.style.gridTemplateColumns = `repeat(${Math.sqrt(nodeCount)}, 1fr)`;
+    createGridInDocument();
+}
+
 const slider = document.querySelector(".slider");
 const value = document.querySelector(".value");
 let startPoint = null;
 let endPoint = null;
 let running = false;
+
+// saglabā izvēlēto šķēršļa preset
+let preset = null;
+
 // parāda slider vērtību
 value.innerText = slider.value + "x" + slider.value;
 
@@ -420,7 +433,11 @@ window.addEventListener("load", () => {
 //JQuery priekš sql
 // dabū datus no php
 $(document).ready(() => {
-    $("#btn").click(() =>{
+    $("#submit").click(() =>{
+        // Paņem izvēlēta preset value no html selected tag
+        preset = $('#walls').val();
+
+        // Dabū datus no datubāzes
         $.get("load.php", (data, status) =>{
             // data satur coord datus no SQL datubāzes
             createMaze(data);
@@ -432,16 +449,17 @@ $(document).ready(() => {
 function createMaze(data) {
     // datus no JSON dabū JS masīvā
     data = JSON.parse(data);
-    console.log(data[0]["coord"])
-    data = JSON.parse(data);
+    let size = data[preset]["size"];
+    data = data[preset]["coord"];
     coordArray = data.split("-");
+    customGrid(size);
     coordArray.forEach(coord => {
         let coordDiv = document.getElementById(coord);
-        addWall(coordDiv)
+        addWall(coordDiv);
     });
 }
 
-document.getElementById("walls").addEventListener("click", () => {
+document.getElementById("wall-coord").addEventListener("click", () => {
     console.log(getWalls());
 })
 
@@ -458,7 +476,7 @@ function getWalls() {
         }
     }
     // noņem pēdējo "-" simbolu
-    allCoord = allCoord.substring(0, allCoord.length - 1);
+    return allCoord = allCoord.substring(0, allCoord.length - 1);
 }
 
 // kad paņem iepriekš iestatītu laukumu tam ir aktuāls elementu izmērs
