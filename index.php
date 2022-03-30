@@ -1,9 +1,10 @@
 <?php
-    include_once "db.php";
+include_once "db.php";
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,6 +14,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="script.js" defer></script>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -45,7 +47,7 @@
             </div>
             <div class="grid"></div>
             <div class="info">
-                <h1>Informācīja</h1>
+                <h2>Informācīja</h2>
                 <h2>
                     <ul>
                         <li>Lai novietotu sākuma un beigu punktu, velciet tā atbilstošo krāsu uz jebkuru laukuma elementu</li>
@@ -62,4 +64,5 @@
         </div>
     </div>
 </body>
+
 </html>

@@ -72,13 +72,13 @@ class Grid {
         while (queue.length) {
             // Paņem elementa koordinātes
             let elementCoord = queue.shift();
-            
+
             // Ja elementa koordinātes ir vienādas ar beigu punktu koordinātēm ceļs ir atrasts
             if (arrayEquals(elementCoord, endNode)) {
                 return {
-                    path: createPath(startNode, endNode, previous), 
-                    discovered: discovered, 
-                    distance: distance
+                    path: createPath(startNode, endNode, previous),
+                    discovered: discovered,
+                    distance: distance,
                 };
             }
 
@@ -94,7 +94,7 @@ class Grid {
                         queue.push(neighbours[elementCoord][i]);
                         // pievieno elementu attālumu no sākuma punkta
                         distance[neighbours[elementCoord][i]] =
-                        distance[elementCoord] + 1;
+                            distance[elementCoord] + 1;
                         // pievieno elementCoord kā tas kas atklāja kaimiņu
                         previous[neighbours[elementCoord][i]] = elementCoord;
                     }
@@ -104,7 +104,7 @@ class Grid {
                 return false;
             }
         }
-        console.log("while loop crash")
+        console.log("while loop crash");
         return false;
     }
 }
@@ -154,7 +154,7 @@ function isCoordAvailable(array, coord) {
     const item_as_string = JSON.stringify(coord);
 
     const contains = array.some(function (ele) {
-        loopCount++
+        loopCount++;
         return (
             JSON.stringify(ele) === item_as_string &&
             document.getElementById(ele.toString()).className != "row blocked"
@@ -216,7 +216,7 @@ function removePoint(point) {
     }
     pointDiv = document.getElementById(point);
 
-    pointDiv.style.backgroundColor = "white"
+    pointDiv.style.backgroundColor = "white";
     pointDiv.className = "row";
 }
 
@@ -229,11 +229,10 @@ function addWall(event) {
     }
 }
 
-
 // Atrod sākuma un beigu punktu režģī
 function findPoints() {
     let points = [];
-    
+
     for (let col = 0; col < Math.sqrt(nodeCount); col++) {
         for (let row = 0; row < Math.sqrt(nodeCount); row++) {
             let element = grid.elementsCoord[col][row].toString();
@@ -280,7 +279,7 @@ function addNeighbours() {
             }
         }
     }
-    console.log(loopCount)
+    console.log(loopCount);
     let endTime = performance.now();
 
     console.log(
@@ -305,7 +304,7 @@ function start() {
     // masīvu reverse, jo tad ceļš būvējas no sākuma punkta nevis no beigu punkta
     path.reverse();
     let discovered = result["discovered"];
-    colorDiscovered(discovered, path, end)
+    colorDiscovered(discovered, path, end);
 }
 
 // Iekrāso katru elementu ko algoritms pārbaudīja
@@ -313,18 +312,18 @@ function colorDiscovered(discovered, path, end) {
     let i = 1;
     let color = "red";
     running = true;
-    console.log(end.toString())
-    Object.keys(discovered).forEach(function(coord) {
-        i++
+    console.log(end.toString());
+    Object.keys(discovered).forEach(function (coord) {
+        i++;
         setTimeout(() => {
             document.getElementById(coord).style.backgroundColor = color;
             // Ja koordinātes ir vienādas ar beigu punktu beidz iekrāsot pārbaudītos elementus
-            if(coord === end.toString()) {
+            if (coord === end.toString()) {
                 colorPath(path);
                 color = "white";
             }
-        },50 * i);
-    }); 
+        }, 50 * i);
+    });
 }
 
 // Iekrāso isāko ceļu
@@ -433,17 +432,17 @@ window.addEventListener("load", () => {
 //JQuery priekš sql
 // dabū datus no php
 $(document).ready(() => {
-    $("#submit").click(() =>{
+    $("#submit").click(() => {
         // Paņem izvēlēta preset value no html selected tag
-        preset = $('#walls').val();
+        preset = $("#walls").val();
 
         // Dabū datus no datubāzes
-        $.get("load.php", (data, status) =>{
+        $.get("load.php", (data, status) => {
             // data satur coord datus no SQL datubāzes
             createMaze(data);
         });
     });
-})
+});
 
 // Novieto šķēršļus no datubāzes koordinātēm
 function createMaze(data) {
@@ -453,7 +452,7 @@ function createMaze(data) {
     data = data[preset]["coord"];
     coordArray = data.split("-");
     customGrid(size);
-    coordArray.forEach(coord => {
+    coordArray.forEach((coord) => {
         let coordDiv = document.getElementById(coord);
         addWall(coordDiv);
     });
@@ -461,7 +460,7 @@ function createMaze(data) {
 
 document.getElementById("wall-coord").addEventListener("click", () => {
     console.log(getWalls());
-})
+});
 
 // Dabū sķēršļu koordināted no režģā;
 function getWalls() {
@@ -470,13 +469,11 @@ function getWalls() {
     for (let col = 0; col < Math.sqrt(nodeCount); col++) {
         for (let row = 0; row < Math.sqrt(nodeCount); row++) {
             let coord = grid["elementsCoord"][col][row].toString();
-            if(document.getElementById(coord).className == "row blocked") {
+            if (document.getElementById(coord).className == "row blocked") {
                 allCoord += coord + "-";
             }
         }
     }
     // noņem pēdējo "-" simbolu
-    return allCoord = allCoord.substring(0, allCoord.length - 1);
+    return (allCoord = allCoord.substring(0, allCoord.length - 1));
 }
-
-// kad paņem iepriekš iestatītu laukumu tam ir aktuāls elementu izmērs
