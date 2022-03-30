@@ -398,6 +398,9 @@ let nodeCount = slider.value * slider.value;
 // Pievieno pareizo kolonnu skaitu
 gridDiv.style.gridTemplateColumns = `repeat(${Math.sqrt(nodeCount)}, 1fr)`;
 
+// Event listener uz selection elementa
+let selection = document.getElementById('presets');
+
 let grid = new Grid();
 
 // Mājas lapas iestatīšana, kad tiek ielādēta
@@ -427,6 +430,22 @@ window.addEventListener("load", () => {
     });
 
     createGridInDocument();
+
+    // select tag tiek salikti režģa iestatījumi no datubāzes
+    $.get("dropdown.php", (data, status) => {
+        // iterācīja
+        let i = 0;
+
+        // data satur name no SQL datubāzes
+        data = JSON.parse(data);
+        data.forEach(name => {
+            let value = document.createElement('option');
+            value.setAttribute("value", i);
+            value.innerText = name["name"];
+            selection.append(value);
+            i++
+        })
+    });
 });
 
 //JQuery priekš sql
@@ -434,7 +453,7 @@ window.addEventListener("load", () => {
 $(document).ready(() => {
     $("#submit").click(() => {
         // Paņem izvēlēta preset value no html selected tag
-        preset = $("#walls").val();
+        preset = $("#presets").val();
 
         // Dabū datus no datubāzes
         $.get("load.php", (data, status) => {
@@ -462,7 +481,7 @@ document.getElementById("wall-coord").addEventListener("click", () => {
     console.log(getWalls());
 });
 
-// Dabū sķēršļu koordināted no režģā;
+// Dabū sķēršļu koordinātes no režģā;
 function getWalls() {
     // saglabā visas koordinātes vienā tekstā
     let allCoord = "";
