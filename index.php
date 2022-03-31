@@ -53,9 +53,6 @@ include_once "db.php";
                         <li>Ja sākuma un beigu punkti ir uz laukuma var sākt meklēšanu</li>
                     </ul>
                 </h2>
-                <h3 id="sql">
-
-                </h3>
                 <button id="wall-coord">Wall coord</button>
                 <p id="test"></p>
             </div>

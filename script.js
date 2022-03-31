@@ -399,7 +399,7 @@ let nodeCount = slider.value * slider.value;
 gridDiv.style.gridTemplateColumns = `repeat(${Math.sqrt(nodeCount)}, 1fr)`;
 
 // Event listener uz selection elementa
-let selection = document.getElementById('presets');
+let selection = document.getElementById("presets");
 
 let grid = new Grid();
 
@@ -438,13 +438,13 @@ window.addEventListener("load", () => {
 
         // data satur name no SQL datubāzes
         data = JSON.parse(data);
-        data.forEach(name => {
-            let value = document.createElement('option');
+        data.forEach((name) => {
+            let value = document.createElement("option");
             value.setAttribute("value", i);
             value.innerText = name["name"];
             selection.append(value);
-            i++
-        })
+            i++;
+        });
     });
 });
 
