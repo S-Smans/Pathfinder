@@ -1,7 +1,7 @@
 <?php
 include "db.php";
 
-$sql = "SELECT name FROM path_coord";
+$sql = "SELECT size FROM path_size";
 $result = mysqli_query($conn, $sql);
 
 $coord = mysqli_fetch_all($result, MYSQLI_ASSOC);

@@ -27,7 +27,7 @@ include_once "db.php";
                 </div>
             </div>
             <div class="dropdown">
-                <h2>Sķēršļi:</h2>
+                <h2>Lielums:</h2>
                 <select id="presets">
                 </select>
                 <button id="submit">Submit</button>

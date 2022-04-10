@@ -441,7 +441,7 @@ window.addEventListener("load", () => {
         data.forEach((name) => {
             let value = document.createElement("option");
             value.setAttribute("value", i);
-            value.innerText = name["name"];
+            value.innerText = name["size"];
             selection.append(value);
             i++;
         });
@@ -454,7 +454,7 @@ $(document).ready(() => {
     $("#submit").click(() => {
         // Paņem izvēlēta preset value no html selected tag
         preset = $("#presets").val();
-
+        
         // Dabū datus no datubāzes
         $.get("load.php", (data, status) => {
             // data satur coord datus no SQL datubāzes
@@ -467,10 +467,10 @@ $(document).ready(() => {
 function createMaze(data) {
     // datus no JSON dabū JS masīvā
     data = JSON.parse(data);
-    let size = data[preset]["size"];
+    let size = data[preset]["sizeId"];
     data = data[preset]["coord"];
     coordArray = data.split("-");
-    customGrid(size);
+    customGrid(6);
     coordArray.forEach((coord) => {
         let coordDiv = document.getElementById(coord);
         addWall(coordDiv);
