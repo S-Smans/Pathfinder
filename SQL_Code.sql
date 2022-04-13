@@ -5,4 +5,7 @@ CREATE TABLE path_size (id int PRIMARY KEY AUTO_INCREMENT, size varchar(255))
 CREATE TABLE path_coord (coordId int PRIMARY KEY AUTO_INCREMENT, sizeId int, FOREIGN KEY(sizeId) REFERENCES path_size(id), coord text, name varchar(255))
 
 -- Dabū visas koordinātes no norādītā režga lieluma
-$sql = "SELECT coord FROM path_coord JOIN path_size ON path_size.id = path_coord.sizeId WHERE size = $size";
+SELECT coord FROM path_coord JOIN path_size ON path_size.id = path_coord.sizeId WHERE size = $size;
+
+-- Ievada koordinātes 
+INSERT INTO path_coord (sizeId, coord, name) VALUES (1, '1,4-2,2-3,1-3,4', 'Custom-1');

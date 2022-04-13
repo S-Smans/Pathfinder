@@ -17,6 +17,7 @@ body {
 
 .selection {
     display: grid;
+    margin-top: 60px;
     grid-template-columns: repeat(6, 1fr);
 }
 
@@ -25,11 +26,22 @@ body {
     height: 220px;
 }
 
-.dropdown {
+.load-names {
+    border: 2px solid #422800;
+    padding: 40px 40px;
+}
+
+.available-grids {
     display: flex;
+    margin-top: 10px;
+    gap: 50px;
+}
+
+.gridSize {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
     width: 600px;
     height: 220px;
 }
@@ -118,7 +130,7 @@ li {
     transition-duration: 0.1s;
 }
 
-button {
+.button {
     background-color: #fbeee0;
     border: 2px solid #422800;
     border-radius: 10px;
@@ -137,24 +149,30 @@ button {
     touch-action: manipulation;
 }
 
-.selection button {
-    line-height: 30px;
-    
+.size {
+    padding: 10px 40px;
+}
+.size:first-child {
+    border-right: 1px solid black;
 }
 
-button:hover {
+.button:hover {
     background-color: #fff;
 }
 
-button:active {
+.button:active {
     box-shadow: #422800 2px 2px 0 0;
     transform: translate(2px, 2px);
 }
 
 @media (min-width: 768px) {
-    button {
+    .button {
         min-width: 120px;
         padding: 0 25px;
+    }
+
+    .selection button {
+        min-width: 60px;
     }
 }
 

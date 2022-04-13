@@ -22,16 +22,18 @@ include_once "db.php";
             <div class="title">
                 <h1>Ceļu meklētājs</h1>
                 <div class="buttons">
-                    <button class="start">Sākt</button>
-                    <button class="reset">Atiestatīt</button>
+                    <button class="start button">Sākt</button>
+                    <button class="reset button">Atiestatīt</button>
                 </div>
             </div>
-            <div class="dropdown">
-                <h2>Lielums:</h2>
+            <div class="gridSize">
                 <div class="selection"> 
 
                 </div>
-                <button id="submit">Submit</button>
+                <div class="available-grids"> 
+
+                </div>
+                <!-- <button id="submit">Submit</button> -->
             </div>
         </div>
         <div class="main">
@@ -42,7 +44,7 @@ include_once "db.php";
                 <h2>Beigu punkts</h2>
                 <p class="value-text"><span class="value"></span></p>
                 <input type="range" class="slider" max="20" min="4">
-                <button class="grid-size">Elementu skaits</button>
+                <button class="grid-size button">Elementu skaits</button>
             </div>
             <div class="grid"></div>
             <div class="info">
@@ -54,7 +56,7 @@ include_once "db.php";
                         <li>Ja sākuma un beigu punkti ir uz laukuma var sākt meklēšanu</li>
                     </ul>
                 </h2>
-                <button id="wall-coord">Wall coord</button>
+                <button id="wall-coord" class="button">Wall coord</button>
                 <p id="test"></p>
             </div>
         </div>

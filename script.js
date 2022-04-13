@@ -401,6 +401,9 @@ gridDiv.style.gridTemplateColumns = `repeat(${Math.sqrt(nodeCount)}, 1fr)`;
 // Event listener uz selection elementa
 let selection = document.querySelector(".selection");
 
+// Event listener prieks available-grids
+let availableGrids = document.querySelector(".available-grids");
+
 let grid = new Grid();
 
 // Mājas lapas iestatīšana, kad tiek ielādēta
@@ -432,14 +435,15 @@ window.addEventListener("load", () => {
     createGridInDocument();
 
     // select tag tiek salikti režģa iestatījumi no datubāzes
-    $.get("dropdown.php", (data, status) => {
+    $.get("gridSize.php", (data, status) => {
         // iterācīja
         let i = 0;
-
         // data satur name no SQL datubāzes
         data = JSON.parse(data);
+        loadSavedSizeGrids()
         data.forEach((name) => {
             let value = document.createElement("button");
+            value.className = "size";
             value.setAttribute("value", i);
             value.innerText = name["size"];
             selection.append(value);
@@ -447,6 +451,30 @@ window.addEventListener("load", () => {
         });
     });
 });
+
+function loadSavedSizeGrids() {
+    $.get("load.php", (data, status) => {
+        data = JSON.parse(data);
+        console.log(data)
+        data.forEach((name) => {
+            let container = document.createElement("div");
+            let paragraph = document.createElement("p");
+
+            let save = document.createElement("button");
+            let load = document.createElement("button");
+            load.innerText = "Load"
+            save.innerText = "Save";
+            
+            container.className = "load-names";
+            paragraph.innerText = name["name"];
+            container.append(paragraph);
+            container.append(save);
+            container.append(load);
+
+            availableGrids.append(container);
+        });
+    });
+}
 
 //JQuery priekš sql
 // dabū datus no php
