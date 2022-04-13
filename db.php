@@ -3,6 +3,6 @@
 $db_host = "localhost";
 $db_user = "root";
 $db_pass = "";
-$db_name = "web_app";
+$db_name = "pathfinder";
 
 $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);

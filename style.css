@@ -15,6 +15,11 @@ body {
     height: 220px;
 }
 
+.selection {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+
 .helper {
     width: 600px;
     height: 220px;
@@ -130,6 +135,11 @@ button {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+}
+
+.selection button {
+    line-height: 30px;
+    
 }
 
 button:hover {

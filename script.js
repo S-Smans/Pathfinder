@@ -399,7 +399,7 @@ let nodeCount = slider.value * slider.value;
 gridDiv.style.gridTemplateColumns = `repeat(${Math.sqrt(nodeCount)}, 1fr)`;
 
 // Event listener uz selection elementa
-let selection = document.getElementById("presets");
+let selection = document.querySelector(".selection");
 
 let grid = new Grid();
 
@@ -439,7 +439,7 @@ window.addEventListener("load", () => {
         // data satur name no SQL datubāzes
         data = JSON.parse(data);
         data.forEach((name) => {
-            let value = document.createElement("option");
+            let value = document.createElement("button");
             value.setAttribute("value", i);
             value.innerText = name["size"];
             selection.append(value);
@@ -496,3 +496,4 @@ function getWalls() {
     // noņem pēdējo "-" simbolu
     return (allCoord = allCoord.substring(0, allCoord.length - 1));
 }
+

@@ -28,8 +28,9 @@ include_once "db.php";
             </div>
             <div class="dropdown">
                 <h2>Lielums:</h2>
-                <select id="presets">
-                </select>
+                <div class="selection"> 
+
+                </div>
                 <button id="submit">Submit</button>
             </div>
         </div>
