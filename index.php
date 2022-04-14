@@ -18,7 +18,9 @@ include_once "db.php";
 <body>
     <div class="container">
         <div class="header">
-            <div class="helper"></div>
+            <div class="helper">
+                <p id="test"> </p>
+            </div>
             <div class="title">
                 <h1>Ceļu meklētājs</h1>
                 <div class="buttons">

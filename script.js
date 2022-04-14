@@ -436,59 +436,52 @@ window.addEventListener("load", () => {
 
     // select tag tiek salikti režģa iestatījumi no datubāzes
     $.get("gridSize.php", (data, status) => {
-        // iterācīja
-        let i = 0;
         // data satur name no SQL datubāzes
         data = JSON.parse(data);
-        loadSavedSizeGrids()
+        //loadSavedSizeGrids();
         data.forEach((name) => {
             let value = document.createElement("button");
             value.className = "size";
-            value.setAttribute("value", i);
             value.innerText = name["size"];
             selection.append(value);
-            i++;
         });
     });
 });
 
-function loadSavedSizeGrids() {
-    $.get("load.php", (data, status) => {
-        data = JSON.parse(data);
-        console.log(data)
-        data.forEach((name) => {
-            let container = document.createElement("div");
-            let paragraph = document.createElement("p");
+function loadSavedSizeGrids(data) {
+    availableGrids.innerHTML = "";
+    data = JSON.parse(data);
+    data.forEach((name) => {
+        let container = document.createElement("div");
+        let paragraph = document.createElement("p");
 
-            let save = document.createElement("button");
-            let load = document.createElement("button");
-            load.innerText = "Load"
-            save.innerText = "Save";
-            
-            container.className = "load-names";
-            paragraph.innerText = name["name"];
-            container.append(paragraph);
-            container.append(save);
-            container.append(load);
+        let save = document.createElement("button");
+        let load = document.createElement("button");
+        load.innerText = "Load";
+        save.innerText = "Save";
 
-            availableGrids.append(container);
-        });
+        container.className = "load-names";
+        paragraph.innerText = name["name"];
+        container.append(paragraph);
+        container.append(save);
+        container.append(load);
+
+        availableGrids.append(container);
     });
 }
 
-//JQuery priekš sql
-// dabū datus no php
-$(document).ready(() => {
-    $("#submit").click(() => {
-        // Paņem izvēlēta preset value no html selected tag
-        preset = $("#presets").val();
-        
-        // Dabū datus no datubāzes
-        $.get("load.php", (data, status) => {
-            // data satur coord datus no SQL datubāzes
-            createMaze(data);
-        });
-    });
+// Click event listener priekš katra pogas
+$(document).on("click", ".size", function (event) {
+    // Uzrāda atbilstošos uzlādējamos režģa koordinātes
+    $.get(
+        "test.php",
+        {
+            size: event.target.innerText,
+        },
+        function (data) {
+            loadSavedSizeGrids(data);
+        }
+    );
 });
 
 // Novieto šķēršļus no datubāzes koordinātēm
@@ -524,4 +517,3 @@ function getWalls() {
     // noņem pēdējo "-" simbolu
     return (allCoord = allCoord.substring(0, allCoord.length - 1));
 }
-
