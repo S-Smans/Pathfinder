@@ -434,7 +434,7 @@ window.addEventListener("load", () => {
 
     createGridInDocument();
 
-    // select tag tiek salikti režģa iestatījumi no datubāzes
+    // Ievada pogas veida visus elementu skaitu lielumus
     $.get("gridSize.php", (data, status) => {
         // data satur name no SQL datubāzes
         data = JSON.parse(data);
@@ -446,8 +446,20 @@ window.addEventListener("load", () => {
             selection.append(value);
         });
     });
+    
+    // Noklusejuma opcija ko uzlādē no datubāzes
+    $.get(
+        "test.php",
+        {
+            size: 4,
+        },
+        function (data) {
+            loadSavedSizeGrids(data);
+        }
+    );
 });
 
+// logs kur var saglabāt un uzlādēt režgi no datubāzes
 function loadSavedSizeGrids(data) {
     availableGrids.innerHTML = "";
     data = JSON.parse(data);
