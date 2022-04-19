@@ -1,20 +1,37 @@
 <?php
 include "db.php";
 
-// Izveido visus iespējamos režģa elementu skaitu lielumus datubāzē
+/* IZVEIDO VISUS IESPĒJAMOS REŽĢĀ ELEMENTU SKAITU LIELUMUS DATUBĀZĒ. path_size TABULĀ*/
 
 // for ($i = 4; $i <= 20; $i++) {
 //   $sql = "INSERT INTO path_size (size) VALUES ($i)";
 //   mysqli_query($conn, $sql);
 // }
 
-// $sql = "INSERT INTO path_coord (sizeId, coord, name) VALUES (2, '1,1-1,5-2,3-3,2-3,3-3,5-4,3-5,1-5,4-5,5', '3) Size-5')";
+
+
+
+/* IZVEIDO KATRAM ELEMENTU SKAITAM 3 RINDAS KUR GLABĀ REŽĢA DATUS */
+
+// $nameCount = 4;
+// $id = 1;
+
+// while ($nameCount < 21) {
+//   for ($i = 1; $i <= 3; $i++) {
+//     $name = "$i) " . $nameCount . "x" . $nameCount;
+//     $sql = "INSERT INTO path_coord (sizeId, coord, name) VALUES ($id, '', '$name')";
+//     mysqli_query($conn,$sql);
+//   }
+//   $nameCount++;
+//   $id++;
+// }
+    
+    
+    
+/* DAŽĀDU SQL KODU IZPILDES VIETA */
+
+// $sql = "CREATE TABLE path_coord (coordId int PRIMARY KEY AUTO_INCREMENT, sizeId int, FOREIGN KEY(sizeId) REFERENCES path_size(id), coord text, name varchar(255))";
 
 // mysqli_query($conn, $sql);
+    
 
-
-
-// for ($i = 1; $i <= 3; $i++) {
-//   $sql = "INSERT INTO path_coord (sizeId, coord, name) VALUES (17, '', '$i) Size-20')";
-//   mysqli_query($conn,$sql);
-// }
