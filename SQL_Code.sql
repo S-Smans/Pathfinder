@@ -9,3 +9,6 @@ SELECT coord FROM path_coord JOIN path_size ON path_size.id = path_coord.sizeId 
 
 -- Ievada koordinātes 
 INSERT INTO path_coord (sizeId, coord, name) VALUES (1, '1,4-2,2-3,1-3,4', 'Custom-1');
+
+-- Saglabā režģa sienu novietojumus attiecīgajā vietā
+UPDATE path_coord SET coord = ? WHERE name=?;
