@@ -30,8 +30,10 @@ include "db.php";
     
 /* DAŽĀDU SQL KODU IZPILDES VIETA */
 
-// $sql = "UPDATE path_coord SET coord = '1,1-3,5-4,4-5,7-6,6-7,3' WHERE name='1) Size-12'";
+// $sql = "SELECT coord FROM path_coord WHERE name = '1) Size-4';";
 
-// mysqli_query($conn, $sql);
+// $result = mysqli_query($conn, $sql);
     
+// $coord = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+// echo $coord[0]["coord"];

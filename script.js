@@ -113,7 +113,6 @@ let sValue;
 
 // Izveido režģi dokumentā
 function createGridInDocument() {
-
   sValue = slider.value;
 
   // Izveido režģā elementus grafiskajai daļai
@@ -473,45 +472,61 @@ function loadSavedSizeGrids(data) {
     let container = document.createElement("div");
     let paragraph = document.createElement("p");
 
-    let save = document.createElement("button");
     let load = document.createElement("button");
-
-    save.id = name["name"];
     load.id = name["name"];
-
     load.innerText = "Load";
-    save.innerText = "Save";
-
-    save.addEventListener("click", saveGrid);
     load.addEventListener("click", loadGrid);
 
     container.className = "load-names";
     paragraph.innerText = name["name"];
     container.append(paragraph);
-    container.append(save);
-    container.append(load);
 
+    // Var saglabāt koordinātas, ja režģis ir tāda paša izmēra kā selelekcijas pogu numurs
+    if (name["name"].substring(8) == sValue) {
+      let save = document.createElement("button");
+      save.id = name["name"];
+      save.innerText = "Save";
+      save.addEventListener("click", saveGrid);
+      container.append(save);
+    }
+
+    container.append(load);
     availableGrids.append(container);
   });
 }
 
 // Saglabā režģa siena novietojumu
 function saveGrid(e) {
-  $.get(
-    "saveGrid.php",
-    {
-      name: e.target.id,
-      walls: getWalls(),
-    },
-    function (data, status) {
-      console.log(data, status)
-    }
-  );
+  if (e.target.id.substring(8) == sValue) {
+    $.get(
+      "saveGrid.php",
+      {
+        name: e.target.id,
+        walls: getWalls(),
+      },
+      function (data, status) {
+        console.log(data, status);
+      }
+    );
+  } else {
+    alert("Nepareizs režģa izmērs");
+  }
 }
 
 // Uzlādē režģa siena novietojumu
-function loadGrid() {
-  console.log("loaded");
+function loadGrid(e) {
+  if (running === false) {
+    $.get(
+      "loadGrid.php",
+      {
+        name: e.target.id,
+        size: e.target.id.substring(8),
+      },
+      function (data) {
+        createMaze(data);
+      }
+    );
+  }
 }
 
 // Click event listener priekš katra selekcijas pogas
@@ -532,14 +547,18 @@ $(document).on("click", ".size", function (event) {
 function createMaze(data) {
   // datus no JSON dabū JS masīvā
   data = JSON.parse(data);
-  let size = data[preset]["sizeId"];
-  data = data[preset]["coord"];
+  let size = data["size"];
+  data = data[0]["coord"];
   coordArray = data.split("-");
-  customGrid(6);
-  coordArray.forEach((coord) => {
-    let coordDiv = document.getElementById(coord);
-    addWall(coordDiv);
-  });
+  customGrid(size);
+  if (coordArray != "") {
+    coordArray.forEach((coord) => {
+      let coordDiv = document.getElementById(coord);
+      addWall(coordDiv);
+    });
+  }
+  sValue = size;
+  console.log(sValue);
 }
 
 document.getElementById("wall-coord").addEventListener("click", () => {
