@@ -452,7 +452,7 @@ window.addEventListener("load", () => {
 
   // Noklusejuma opcija ko uzlādē no datubāzes
   $.get(
-    "test.php",
+    "loadCard.php",
     {
       size: 4,
     },
@@ -526,6 +526,18 @@ function loadGrid(e) {
         createMaze(data);
       }
     );
+
+    sValue = e.target.id.substring(8),
+
+    $.get(
+      "loadCard.php",
+      {
+        size: e.target.id.substring(8),
+      },
+      function (data) {
+        loadSavedSizeGrids(data);
+      }
+    );
   }
 }
 
@@ -533,7 +545,7 @@ function loadGrid(e) {
 $(document).on("click", ".size", function (event) {
   // Uzrāda atbilstošos uzlādējamos režģa koordinātes
   $.get(
-    "test.php",
+    "loadCard.php",
     {
       size: event.target.innerText,
     },
@@ -558,7 +570,6 @@ function createMaze(data) {
     });
   }
   sValue = size;
-  console.log(sValue);
 }
 
 document.getElementById("wall-coord").addEventListener("click", () => {
