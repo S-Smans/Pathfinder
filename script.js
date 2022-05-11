@@ -99,7 +99,6 @@ class Grid {
           }
         }
       } catch (e) {
-        alert(e + ".\n Koordinātes nav iespējamas.");
         return false;
       }
     }
@@ -295,22 +294,25 @@ function addNeighbours() {
 // Sāk meklēt isāko ceļu
 function start() {
   if (running === false && finished === false) {
-    // aizliedz jebkādu lietotāja darbību uz režģā
-    document.querySelector(".grid").style.pointerEvents = "none";
     // Vispirms atrod iespējamos elementa kaimiņus
     addNeighbours();
-
+    
     let points = findPoints();
-
+    
     let start = points["start"];
     let end = points["end"];
-
+    
     let result = grid.breadthFirstSearch(start, end);
-    let path = result["path"];
-    // masīvu reverse, jo tad ceļš būvējas no sākuma punkta nevis no beigu punkta
-    path.reverse();
-    let discovered = result["discovered"];
-    colorDiscovered(discovered, path, end);
+    console.log(result);
+    if (result !== false) {
+      // aizliedz jebkādu lietotāja darbību uz režģā
+      document.querySelector(".grid").style.pointerEvents = "none";
+      let path = result["path"];
+      // masīvu reverse, jo tad ceļš būvējas no sākuma punkta nevis no beigu punkta
+      path.reverse();
+      let discovered = result["discovered"];
+      colorDiscovered(discovered, path, end);
+    }
   }
 
   // Iekrāso katru elementu ko algoritms pārbaudīja
@@ -584,10 +586,6 @@ function createMaze(data) {
   sValue = size;
   currentSize.innerText = sValue;
 }
-
-document.getElementById("wall-coord").addEventListener("click", () => {
-  console.log(getWalls());
-});
 
 // Dabū sķēršļu koordinātes no režģā;
 function getWalls() {
