@@ -18,24 +18,13 @@ include_once "db.php";
 <body>
     <div class="container">
         <div class="header">
-            <div class="helper">
-                <p id="test"> </p>
-            </div>
             <div class="title">
                 <h1>Ceļu meklētājs</h1>
                 <div class="buttons">
                     <button class="start button">Sākt</button>
                     <button class="reset button">Atiestatīt</button>
                 </div>
-            </div>
-            <div class="gridSize">
-                <div class="selection"> 
-
-                </div>
-                <div class="available-grids"> 
-
-                </div>
-                <!-- <button id="submit">Submit</button> -->
+                <h2>Size:<span class="currentSize"></span></h2>
             </div>
         </div>
         <div class="main">
@@ -50,16 +39,16 @@ include_once "db.php";
             </div>
             <div class="grid"></div>
             <div class="info">
-                <h2>Informācīja</h2>
-                <h2>
-                    <ul>
-                        <li>Lai novietotu sākuma un beigu punktu, velciet tā atbilstošo krāsu uz jebkuru laukuma elementu</li>
-                        <li>Nospiežot jebkuru elementu ar peles klikšķi pievieno sienu</li>
-                        <li>Ja sākuma un beigu punkti ir uz laukuma var sākt meklēšanu</li>
-                    </ul>
-                </h2>
-                <button id="wall-coord" class="button">Wall coord</button>
-                <p id="test"></p>
+                <h2>Uzlāde</h2>
+                <div class="gridSize">
+                    <div class="selection">
+
+                    </div>
+                    <div class="available-grids">
+
+                    </div>
+                    <!-- <button id="submit">Submit</button> -->
+                </div>
             </div>
         </div>
     </div>

@@ -114,6 +114,7 @@ let sValue;
 // Izveido režģi dokumentā
 function createGridInDocument() {
   sValue = slider.value;
+  currentSize.innerText = sValue;
 
   // Izveido režģā elementus grafiskajai daļai
   for (let col = 1; col <= Math.sqrt(nodeCount); col++) {
@@ -151,6 +152,8 @@ function createGridInDocument() {
     // Ievada kollonu ar rindām dokumenta režģī
     gridDiv.append(divCol);
   }
+  startPoint = null;
+  endPoint = null;
 }
 
 // Pārbauda vai koordinātes ir iespējamas uz režģa
@@ -200,7 +203,7 @@ function drop(event) {
   if (data == "startPoint") {
     removePoint(startPoint);
     startPoint = event.target.id;
-    event.target.style.backgroundColor = "blue";
+    event.target.style.backgroundColor = "#151552";
     event.target.className = "row start";
   }
 
@@ -208,7 +211,7 @@ function drop(event) {
   if (data == "endPoint") {
     removePoint(endPoint);
     endPoint = event.target.id;
-    event.target.style.backgroundColor = "green";
+    event.target.style.backgroundColor = "#3D0808";
     event.target.className = "row end";
   }
 }
@@ -220,7 +223,7 @@ function removePoint(point) {
   }
   pointDiv = document.getElementById(point);
 
-  pointDiv.style.backgroundColor = "white";
+  pointDiv.style.backgroundColor = "#C5D1EB";
   pointDiv.className = "row";
 }
 
@@ -291,41 +294,44 @@ function addNeighbours() {
 
 // Sāk meklēt isāko ceļu
 function start() {
-  // aizliedz jebkādu lietotāja darbību uz režģā
-  document.querySelector(".grid").style.pointerEvents = "none";
-  // Vispirms atrod iespējamos elementa kaimiņus
-  addNeighbours();
+  if (running === false && finished === false) {
+    // aizliedz jebkādu lietotāja darbību uz režģā
+    document.querySelector(".grid").style.pointerEvents = "none";
+    // Vispirms atrod iespējamos elementa kaimiņus
+    addNeighbours();
 
-  let points = findPoints();
+    let points = findPoints();
 
-  let start = points["start"];
-  let end = points["end"];
+    let start = points["start"];
+    let end = points["end"];
 
-  let result = grid.breadthFirstSearch(start, end);
-  let path = result["path"];
-  // masīvu reverse, jo tad ceļš būvējas no sākuma punkta nevis no beigu punkta
-  path.reverse();
-  let discovered = result["discovered"];
-  colorDiscovered(discovered, path, end);
-}
+    let result = grid.breadthFirstSearch(start, end);
+    let path = result["path"];
+    // masīvu reverse, jo tad ceļš būvējas no sākuma punkta nevis no beigu punkta
+    path.reverse();
+    let discovered = result["discovered"];
+    colorDiscovered(discovered, path, end);
+  }
 
-// Iekrāso katru elementu ko algoritms pārbaudīja
-function colorDiscovered(discovered, path, end) {
-  let i = 1;
-  let color = "red";
-  running = true;
-  console.log(end.toString());
-  Object.keys(discovered).forEach(function (coord) {
-    i++;
-    setTimeout(() => {
-      document.getElementById(coord).style.backgroundColor = color;
-      // Ja koordinātes ir vienādas ar beigu punktu beidz iekrāsot pārbaudītos elementus
-      if (coord === end.toString()) {
-        colorPath(path);
-        color = "white";
-      }
-    }, 50 * i);
-  });
+  // Iekrāso katru elementu ko algoritms pārbaudīja
+  function colorDiscovered(discovered, path, end) {
+    let i = 1;
+    let color = "#4D774E";
+    running = true;
+    finished = true;
+    console.log(end.toString());
+    Object.keys(discovered).forEach(function (coord) {
+      i++;
+      setTimeout(() => {
+        document.getElementById(coord).style.backgroundColor = color;
+        // Ja koordinātes ir vienādas ar beigu punktu beidz iekrāsot pārbaudītos elementus
+        if (coord === end.toString()) {
+          colorPath(path);
+          color = "#C5D1EB";
+        }
+      }, 50 * i);
+    });
+  }
 }
 
 // Iekrāso isāko ceļu
@@ -341,6 +347,8 @@ function colorPath(path) {
 
 // Izdzēš režģi
 function deleteGrid() {
+  finished = false;
+
   while (gridDiv.hasChildNodes()) {
     gridDiv.removeChild(gridDiv.lastChild);
   }
@@ -380,11 +388,13 @@ function customGrid(size) {
   createGridInDocument();
 }
 
+const currentSize = document.querySelector(".currentSize");
 const slider = document.querySelector(".slider");
 const value = document.querySelector(".value");
 let startPoint = null;
 let endPoint = null;
 let running = false;
+let finished = false;
 
 // saglabā izvēlēto šķēršļa preset
 let preset = null;
@@ -471,13 +481,14 @@ function loadSavedSizeGrids(data) {
   data.forEach((name) => {
     let container = document.createElement("div");
     let paragraph = document.createElement("p");
+    let div = document.createElement("div");
 
     let load = document.createElement("button");
     load.id = name["name"];
     load.innerText = "Load";
     load.addEventListener("click", loadGrid);
 
-    container.className = "load-names";
+    container.className = "card";
     paragraph.innerText = name["name"];
     container.append(paragraph);
 
@@ -487,10 +498,11 @@ function loadSavedSizeGrids(data) {
       save.id = name["name"];
       save.innerText = "Save";
       save.addEventListener("click", saveGrid);
-      container.append(save);
+      div.append(save);
     }
 
-    container.append(load);
+    div.append(load);
+    container.append(div);
     availableGrids.append(container);
   });
 }
@@ -527,7 +539,7 @@ function loadGrid(e) {
       }
     );
 
-    sValue = e.target.id.substring(8),
+    sValue = e.target.id.substring(8);
 
     $.get(
       "loadCard.php",
@@ -570,6 +582,7 @@ function createMaze(data) {
     });
   }
   sValue = size;
+  currentSize.innerText = sValue;
 }
 
 document.getElementById("wall-coord").addEventListener("click", () => {
