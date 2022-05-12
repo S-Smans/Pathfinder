@@ -43,6 +43,30 @@ body {
   border-radius: 30px;
   width: 150px;
   height: 150px;
+  box-shadow: #9dc88d 4px 4px 0 0;
+}
+
+.card div button {
+  background-color: #f1b24a;
+  border: 2px solid #164a41;
+  border-radius: 10px;
+  box-shadow: #164a41 4px 4px 0 0;
+  color: #164a41;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 0 9px;
+  margin-left: 10px;
+  margin-right: 10px;
+  line-height: 25px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.info h2 {
+  text-align: center;
+  font-size: 40px;
 }
 
 .available-grids {
@@ -58,6 +82,16 @@ body {
   align-items: center;
   width: 600px;
   height: 220px;
+}
+
+span {
+  color: #c5d1eb;
+}
+
+p {
+  color: #164a41;
+  font-weight: 600;
+  font-size: 22px;
 }
 
 .main {
@@ -151,9 +185,6 @@ li {
   line-height: 50px;
   text-align: center;
   text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
 }
 
 .size {
@@ -192,4 +223,21 @@ li {
 .value-text {
   font-size: 30px;
   margin-top: 50px;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 32%;
+  height: 25px;
+  background: #9dc88d;
+  outline: none;
+  opacity: 0.7;
+  margin-bottom: 20px;
+}
+
+.slider::-moz-range-thumb {
+  width: 23px;
+  height: 23px;
+  background: #164a41;
+  cursor: pointer;
 }

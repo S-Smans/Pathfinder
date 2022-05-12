@@ -222,7 +222,7 @@ function removePoint(point) {
   }
   pointDiv = document.getElementById(point);
 
-  pointDiv.style.backgroundColor = "#C5D1EB";
+  pointDiv.removeAttribute("style");
   pointDiv.className = "row";
 }
 
@@ -296,12 +296,12 @@ function start() {
   if (running === false && finished === false) {
     // Vispirms atrod iespējamos elementa kaimiņus
     addNeighbours();
-    
+
     let points = findPoints();
-    
+
     let start = points["start"];
     let end = points["end"];
-    
+
     let result = grid.breadthFirstSearch(start, end);
     console.log(result);
     if (result !== false) {
@@ -495,7 +495,7 @@ function loadSavedSizeGrids(data) {
     container.append(paragraph);
 
     // Var saglabāt koordinātas, ja režģis ir tāda paša izmēra kā selelekcijas pogu numurs
-    if (name["name"].substring(8) == sValue) {
+    if (name["name"].substring(10) == sValue) {
       let save = document.createElement("button");
       save.id = name["name"];
       save.innerText = "Save";
@@ -511,7 +511,7 @@ function loadSavedSizeGrids(data) {
 
 // Saglabā režģa siena novietojumu
 function saveGrid(e) {
-  if (e.target.id.substring(8) == sValue) {
+  if (e.target.id.substring(10) == sValue) {
     $.get(
       "saveGrid.php",
       {
@@ -534,19 +534,19 @@ function loadGrid(e) {
       "loadGrid.php",
       {
         name: e.target.id,
-        size: e.target.id.substring(8),
+        size: e.target.id.substring(10),
       },
       function (data) {
         createMaze(data);
       }
     );
 
-    sValue = e.target.id.substring(8);
+    sValue = e.target.id.substring(10);
 
     $.get(
       "loadCard.php",
       {
-        size: e.target.id.substring(8),
+        size: e.target.id.substring(10),
       },
       function (data) {
         loadSavedSizeGrids(data);

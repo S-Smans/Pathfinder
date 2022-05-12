@@ -18,7 +18,7 @@ include "db.php";
 
 // while ($nameCount < 21) {
 //   for ($i = 1; $i <= 3; $i++) {
-//     $name = "$i) Size-" . $nameCount;
+//     $name = "$i) Izmērs-" . $nameCount;
 //     $sql = "INSERT INTO path_coord (sizeId, coord, name) VALUES ($id, '', '$name')";
 //     mysqli_query($conn,$sql);
 //   }
