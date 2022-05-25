@@ -14,6 +14,15 @@ const functions = {
     }
     return obj;
   },
+
+  arrayEquals: (arrayOne, arrayTwo) => {
+    return (
+      Array.isArray(arrayOne) &&
+      Array.isArray(arrayTwo) &&
+      arrayOne.length === arrayTwo.length &&
+      arrayOne.every((val, index) => val === arrayTwo[index])
+    );
+  }
 };
 
 module.exports = functions;
