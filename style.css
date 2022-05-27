@@ -200,12 +200,14 @@ li {
 }
 
 .button:hover,
-.size:hover {
+.size:hover,
+.card div button:hover  {
   background-color: #9dc88d;
 }
 
 .button:active,
-.size:active {
+.size:active,
+.card div button:active {
   box-shadow: #164a41 2px 2px 0 0;
   transform: translate(2px, 2px);
 }
