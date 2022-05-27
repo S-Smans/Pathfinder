@@ -102,7 +102,6 @@ class Grid {
         return false;
       }
     }
-    console.log("while loop crash");
     return false;
   }
 }
@@ -285,10 +284,7 @@ function addNeighbours() {
       }
     }
   }
-  console.log(loopCount);
   let endTime = performance.now();
-
-  console.log(`Call to addNeighbours took ${endTime - startTime} milliseconds`);
 }
 
 // Sāk meklēt isāko ceļu
@@ -303,7 +299,6 @@ function start() {
     let end = points["end"];
 
     let result = grid.breadthFirstSearch(start, end);
-    console.log(result);
     if (result !== false) {
       // aizliedz jebkādu lietotāja darbību uz režģā
       document.querySelector(".grid").style.pointerEvents = "none";
@@ -312,6 +307,9 @@ function start() {
       path.reverse();
       let discovered = result["discovered"];
       colorDiscovered(discovered, path, end);
+    } else {
+      // Modāls. Atver logu, kas pasaka lai pievieno sākumu un beigu punktu
+      modal.style.display = 'block';
     }
   }
 
@@ -321,7 +319,6 @@ function start() {
     let color = "#4D774E";
     running = true;
     finished = true;
-    console.log(end.toString());
     Object.keys(discovered).forEach(function (coord) {
       i++;
       setTimeout(() => {
@@ -518,8 +515,7 @@ function saveGrid(e) {
         name: e.target.id,
         walls: getWalls(),
       },
-      function (data, status) {
-        console.log(data, status);
+      function () {
       }
     );
   } else {
@@ -602,3 +598,19 @@ function getWalls() {
   // noņem pēdējo "-" simbolu
   return (allCoord = allCoord.substring(0, allCoord.length - 1));
 }
+
+// Modāls
+const modal = document.querySelector('.modal');
+const closeModal = document.querySelector('.close-modal');
+
+// Aizver logu ja uzspiež uz modāla fona
+window.addEventListener('click', (e) => {
+	if(e.target === modal) {
+		modal.style.display = 'none';
+	}
+});
+
+// Aizver modāli ja uzspiež uz krustiņa
+closeModal.addEventListener('click', () => {
+	modal.style.display = 'none';
+});

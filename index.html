@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ceļu meklētājs</title>
+  <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title">
+        <h1>Ceļu meklētājs</h1>
+        <div class="buttons">
+          <button class="start button">Sākt</button>
+          <button class="reset button">Atiestatīt</button>
+        </div>
+        <h2>Izmērs:<span class="currentSize"></span></h2>
+      </div>
+    </div>
+    <div class="main">
+      <div class="tools">
+        <h2>Sākuma punkts</h2>
+        <div class="startPoint" draggable="true" ondragstart="drag(event)"></div>
+        <div class="endPoint" draggable="true" ondragstart="drag(event)"></div>
+        <h2>Beigu punkts</h2>
+        <p class="value-text"><span class="value"></span></p>
+        <input type="range" class="slider" max="20" min="4" />
+        <button class="grid-size button">Elementu skaits</button>
+      </div>
+      <div class="grid"></div>
+      <div class="info">
+        <h2>Uzlāde un saglabāšana datubāzē</h2>
+        <div class="gridSize">
+          <div class="selection"></div>
+          <div class="available-grids"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close-modal">&times;</span>
+          <h2>Sākuma punkts vai beigu punkts nav ievietots!</h2>
+        </div>
+        <div class="modal-body">
+          <p>Lai ievietotu punktus, velciet atbilstošā punkta krāsu uz laukuma, turot nospiestu peli</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
