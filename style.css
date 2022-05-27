@@ -3,6 +3,7 @@ body {
   margin: 0;
   height: 100%;
   background-image: linear-gradient(to right, #164a41, #4d774e);
+  font-family: "Times New Roman", Times, serif;
 }
 
 .container {
