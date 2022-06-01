@@ -289,6 +289,8 @@ function addNeighbours() {
 
 // Sāk meklēt isāko ceļu
 function start() {
+  // Saglabā elementus bez kaimiņiem, ja sākuma un beigu punkti nav ievietoti tad attiestata elementus bez kaimiņiem
+  const noNeighbours = JSON.parse(JSON.stringify(grid.neighbours));
   if (running === false && finished === false) {
     // Vispirms atrod iespējamos elementa kaimiņus
     addNeighbours();
@@ -309,7 +311,9 @@ function start() {
       colorDiscovered(discovered, path, end);
     } else {
       // Modāls. Atver logu, kas pasaka lai pievieno sākumu un beigu punktu
-      modal.style.display = 'block';
+      modal.style.display = "block";
+      // Noņem kaimiņus visiem elementiem
+      grid.neighbours = noNeighbours;
     }
   }
 
@@ -515,8 +519,7 @@ function saveGrid(e) {
         name: e.target.id,
         walls: getWalls(),
       },
-      function () {
-      }
+      function () {}
     );
   } else {
     alert("Nepareizs režģa izmērs");
@@ -600,17 +603,17 @@ function getWalls() {
 }
 
 // Modāls
-const modal = document.querySelector('.modal');
-const closeModal = document.querySelector('.close-modal');
+const modal = document.querySelector(".modal");
+const closeModal = document.querySelector(".close-modal");
 
 // Aizver logu ja uzspiež uz modāla fona
-window.addEventListener('click', (e) => {
-	if(e.target === modal) {
-		modal.style.display = 'none';
-	}
+window.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    modal.style.display = "none";
+  }
 });
 
 // Aizver modāli ja uzspiež uz krustiņa
-closeModal.addEventListener('click', () => {
-	modal.style.display = 'none';
+closeModal.addEventListener("click", () => {
+  modal.style.display = "none";
 });
