@@ -310,8 +310,10 @@ function start() {
       let discovered = result["discovered"];
       colorDiscovered(discovered, path, end);
     } else {
-      // Modāls. Atver logu, kas pasaka lai pievieno sākumu un beigu punktu
-      modal.style.display = "block";
+      if (!start || !end) {
+        // Modāls. Atver logu, kas pasaka lai pievieno sākumu un beigu punktu
+        modal.style.display = "block";
+      }
       // Noņem kaimiņus visiem elementiem
       grid.neighbours = noNeighbours;
     }
