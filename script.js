@@ -115,7 +115,7 @@ let isRemove = false;
 
 document.addEventListener("mouseup", () => {
   isMousedown = false;
-})
+});
 // Izveido režģi dokumentā
 function createGridInDocument() {
   sValue = slider.value;
@@ -166,7 +166,11 @@ function createGridInDocument() {
       divRow.addEventListener("mousemove", (e) => {
         if (isMousedown && e.target.className !== "row blocked" && !isRemove) {
           addWall(e.target);
-        } else if (isMousedown && e.target.className === "row blocked" && isRemove) {
+        } else if (
+          isMousedown &&
+          e.target.className === "row blocked" &&
+          isRemove
+        ) {
           addWall(e.target);
         }
       });
@@ -286,7 +290,6 @@ let loopCount = 0;
 
 // iedod katram elementam kaimiņus
 function addNeighbours() {
-  let startTime = performance.now();
   // Iespējamie kaimiņa koordinātes
   let possibleNeighbours = [
     [0, 1], // leju
@@ -314,7 +317,6 @@ function addNeighbours() {
       }
     }
   }
-  let endTime = performance.now();
 }
 
 // Sāk meklēt isāko ceļu
@@ -331,6 +333,7 @@ function start() {
     let end = points["end"];
 
     let result = grid.breadthFirstSearch(start, end);
+    console.log(result);
     if (result !== false) {
       // aizliedz jebkādu lietotāja darbību uz režģā
       document.querySelector(".grid").style.pointerEvents = "none";
@@ -342,7 +345,16 @@ function start() {
     } else {
       if (!start || !end) {
         // Modāls. Atver logu, kas pasaka lai pievieno sākumu un beigu punktu
-        modal.style.display = "block";
+        modalError(
+          "Sākuma punkts vai beigu punkts nav ievietots!",
+          "Lai ievietotu punktus, velciet atbilstošā punkta krāsu uz laukuma, turot nospiestu peli"
+        );
+      } else {
+        // Modāls. Atver logu, ja nav iespējams atrast īsāko ceļu
+        modalError(
+          "Nav iespējams atrast īsāko ceļu!",
+          "Pārliecinieties, vai neviena dzeltena siena neaizsedz pieejamo ceļu"
+        )
       }
       // Noņem kaimiņus visiem elementiem
       grid.neighbours = noNeighbours;
@@ -634,18 +646,29 @@ function getWalls() {
   return (allCoord = allCoord.substring(0, allCoord.length - 1));
 }
 
-// Modāls
+// Uznirstošais logs
 const modal = document.querySelector(".modal");
 const closeModal = document.querySelector(".close-modal");
 
-// Aizver logu ja uzspiež uz modāla fona
+// Aizver logu ja uzspiež uz Uznirstošā loga fona
 window.addEventListener("click", (e) => {
   if (e.target === modal) {
     modal.style.display = "none";
   }
 });
 
-// Aizver modāli ja uzspiež uz krustiņa
+// Aizver Uznirstošo logu ja uzspiež uz krustiņa
 closeModal.addEventListener("click", () => {
   modal.style.display = "none";
 });
+
+// Atveras Uznirstošais logs
+function modalError(h2Text, pText) {
+  const h2Error = document.querySelector(".h2-error");
+  const pError = document.querySelector(".p-error");
+
+  h2Error.innerText = h2Text;
+  pError.innerText = pText;
+
+  modal.style.display = "block";
+}
