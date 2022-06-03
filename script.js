@@ -354,7 +354,7 @@ function start() {
         modalError(
           "Nav iespējams atrast īsāko ceļu!",
           "Pārliecinieties, vai neviena dzeltena siena neaizsedz pieejamo ceļu"
-        )
+        );
       }
       // Noņem kaimiņus visiem elementiem
       grid.neighbours = noNeighbours;
@@ -424,6 +424,17 @@ function resetGrid() {
   nodeCount = slider.value * slider.value;
   gridDiv.style.gridTemplateColumns = `repeat(${Math.sqrt(nodeCount)}, 1fr)`;
   createGridInDocument();
+
+  // Uzlādē no datubāzes pareizos izmēra laukus
+  $.get(
+    "loadCard.php",
+    {
+      size: slider.value,
+    },
+    function (data) {
+      loadSavedSizeGrids(data);
+    }
+  );
 }
 
 // Režģis izveidots no datubāzes iestatījumiem
@@ -511,7 +522,7 @@ window.addEventListener("load", () => {
   $.get(
     "loadCard.php",
     {
-      size: 4,
+      size: 12,
     },
     function (data) {
       loadSavedSizeGrids(data);
@@ -595,6 +606,8 @@ function loadGrid(e) {
         loadSavedSizeGrids(data);
       }
     );
+    slider.value = e.target.id.substring(10);
+    value.innerText = slider.value + "x" + slider.value;
   }
 }
 
