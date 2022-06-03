@@ -161,6 +161,14 @@ li {
   background-color: #F1B24A;
 }
 
+.row.start {
+  background-color: #151552;
+}
+
+.row.end {
+  background-color: #3D0808;
+}
+
 .row {
   border: solid 1px #164a41;
   background-color: #c5d1eb;

@@ -235,7 +235,6 @@ function drop(event) {
   if (data == "startPoint") {
     removePoint(startPoint);
     startPoint = event.target.id;
-    event.target.style.backgroundColor = "#151552";
     event.target.className = "row start";
   }
 
@@ -243,7 +242,6 @@ function drop(event) {
   if (data == "endPoint") {
     removePoint(endPoint);
     endPoint = event.target.id;
-    event.target.style.backgroundColor = "#3D0808";
     event.target.className = "row end";
   }
 }
@@ -261,7 +259,13 @@ function removePoint(point) {
 
 // Pievieno šķērsli
 function addWall(event) {
-  if (event.className != "row blocked") {
+  if (event.className === "row start") {
+    event.className = "row blocked";
+    startPoint = null;
+  } else if (event.className === "row end") {
+    event.className = "row blocked";
+    endPoint = null;
+  } else if (event.className != "row blocked") {
     event.className = "row blocked";
   } else {
     event.className = "row";
