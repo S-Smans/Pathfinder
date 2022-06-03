@@ -109,6 +109,13 @@ class Grid {
 // Elements kas saturēs režģa elementa lielumu skaitu
 let sValue;
 
+// Vai pele ir nospiesta uz laukuma
+let isMousedown = false;
+let isRemove = false;
+
+document.addEventListener("mouseup", () => {
+  isMousedown = false;
+})
 // Izveido režģi dokumentā
 function createGridInDocument() {
   sValue = slider.value;
@@ -140,6 +147,29 @@ function createGridInDocument() {
       divRow.addEventListener("drop", (e) => drop(e));
       // uzspiežot uz elementa pievieno sķērsli
       divRow.addEventListener("click", (e) => addWall(e.target));
+
+      // Sienu zīmēšanas implementācīja
+      divRow.addEventListener("mousedown", (e) => {
+        if (e.target.className === "row blocked") {
+          isMousedown = true;
+          isRemove = true;
+        } else {
+          isMousedown = true;
+        }
+      });
+
+      divRow.addEventListener("mouseup", () => {
+        isMousedown = false;
+        isRemove = false;
+      });
+
+      divRow.addEventListener("mousemove", (e) => {
+        if (isMousedown && e.target.className !== "row blocked" && !isRemove) {
+          addWall(e.target);
+        } else if (isMousedown && e.target.className === "row blocked" && isRemove) {
+          addWall(e.target);
+        }
+      });
 
       divCol.append(divRow);
     }

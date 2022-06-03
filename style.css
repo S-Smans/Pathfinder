@@ -4,6 +4,7 @@ body {
   height: 100%;
   background-image: linear-gradient(to right, #164a41, #4d774e);
   font-family: "Times New Roman", Times, serif;
+  user-select: none;
 }
 
 .container {
@@ -163,6 +164,7 @@ li {
 .row {
   border: solid 1px #164a41;
   background-color: #c5d1eb;
+  user-select: none;
 }
 
 .row:hover {
