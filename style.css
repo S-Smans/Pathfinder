@@ -1,3 +1,4 @@
+/* Stils kas tiek piešķirts visiem elementiem */
 html,
 body {
   margin: 0;
@@ -20,6 +21,7 @@ body {
   height: 220px;
 }
 
+/* Galvenes stila daļa */
 .header {
   margin: auto;
   margin-bottom: 50px;
@@ -36,6 +38,7 @@ body {
   height: 220px;
 }
 
+/* 3 logi uzlādēti no datubāzes */
 .card {
   display: flex;
   flex-direction: column;
@@ -48,6 +51,7 @@ body {
   box-shadow: #9dc88d 4px 4px 0 0;
 }
 
+/* loga pogas */
 .card div button {
   background-color: #f1b24a;
   border: 2px solid #164a41;
@@ -65,7 +69,7 @@ body {
   text-align: center;
   text-decoration: none;
 }
-
+/* Labās puses h2 teksta elements */
 .info h2 {
   text-align: center;
   font-size: 40px;
@@ -77,6 +81,7 @@ body {
   gap: 50px;
 }
 
+/* Režģa stils */
 .gridSize {
   display: flex;
   flex-direction: column;
@@ -101,12 +106,14 @@ p {
   justify-content: space-between;
 }
 
+/* Sākuma punkts */
 .startPoint {
   width: 50px;
   height: 50px;
   background-color: #151552;
 }
 
+/* Beigu Punkts */
 .endPoint {
   width: 50px;
   height: 50px;
@@ -128,6 +135,7 @@ li {
   margin-top: 40px;
 }
 
+/* Kreisās dokumenta daļas stils */
 .tools {
   display: flex;
   align-items: center;
@@ -141,6 +149,7 @@ li {
   margin-right: 50px;
 }
 
+/* Režģis kas atrodas vidū */
 .grid {
   display: grid;
   width: 600px;
@@ -151,12 +160,13 @@ li {
   width: 600px;
   height: 600px;
 }
-
+/* kolonna */
 .col {
   display: grid;
   background-color: #c5d1eb;
 }
 
+/* Elementi uz režģa */
 .row.blocked {
   background-color: #F1B24A;
 }
@@ -181,7 +191,7 @@ li {
   -ms-transform: scale(1.1);
   transition-duration: 0.1s;
 }
-
+/* 3 pogas dokumentā */
 .button {
   background-color: #f1b24a;
   border: 2px solid #164a41;
@@ -198,6 +208,7 @@ li {
   text-decoration: none;
 }
 
+/* datubāzes 17 pogas  */
 .size {
   height: 60px;
   width: 60px;
@@ -209,12 +220,14 @@ li {
   color: #164a41;
 }
 
+/* novietojiet kursoru */
 .button:hover,
 .size:hover,
 .card div button:hover  {
   background-color: #9dc88d;
 }
 
+/* aktīvs */
 .button:active,
 .size:active,
 .card div button:active {
@@ -222,6 +235,7 @@ li {
   transform: translate(2px, 2px);
 }
 
+/* Izmēra maiņā ja rezolūcīja samazinas zem 768px */
 @media (min-width: 768px) {
   .button {
     min-width: 120px;
@@ -237,7 +251,7 @@ li {
   font-size: 30px;
   margin-top: 50px;
 }
-
+/* Slīdnis */
 .slider {
   -webkit-appearance: none;
   width: 32%;
@@ -255,7 +269,9 @@ li {
   cursor: pointer;
 }
 
-/* MODĀLS */
+/* Uznirstošais logs */
+
+/* melna caurspīdīga daļa kas izplešas pa visu ekrānu */
 .modal {
   display: none;
 	position: fixed;
@@ -268,6 +284,7 @@ li {
 	background-color: rgba(0, 0, 0, 0.4);
 }
 
+/* Uznirstošā loga saturs */
 .modal-content {
   background-color: #9dc88d;
 	margin: 18% auto;
@@ -312,6 +329,7 @@ li {
 	cursor: pointer;
 }
 
+/* Animācīja */
 @keyframes modalopen {
 	from{opacity: 0}
 	to {opacity: 1}

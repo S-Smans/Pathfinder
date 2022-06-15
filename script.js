@@ -1,8 +1,8 @@
 // Sandis Smans
-// Atsevišķš režģis, kas atrodas loģiskājā daļā
+// Režģa klase
 class Grid {
   constructor() {
-    // satur visus elementu koordinātes uz režģa
+    // satur visus elementu koordinātas uz režģa
     this.elementsCoord = [];
     // satur visus pieejamos elementa kaimiņus uz režģa
     this.neighbours = {};
@@ -39,7 +39,7 @@ class Grid {
     const distance = [];
     distance[startNode] = 0;
 
-    // Masīvs satur tā elementa koordinātes, kas to pābaudīja
+    // Masīvs satur tā elementa koordinātas, kas to pābaudīja
     // Palīdz atcerēties ceļu, no kura tas ir nācis
     const previous = [];
     // null, jo sākuma punkts nerāda ceļu atpakaļ uz sevi
@@ -49,13 +49,13 @@ class Grid {
     const createPath = (startNode, endNode, previous) => {
       const path = [];
 
-      // Pievieno beiga punktu koordinātes
+      // Pievieno beiga punktu koordinātas
       path.push(endNode);
 
       // Paņem beiga punktu iepriekšejo elementu
       let prior = previous[endNode];
 
-      // Kamēr iepriekšejā koordinātes nav vienādas ar sākuma punktu koordinātēm - būvē ceļu
+      // Kamēr iepriekšejā koordinātas nav vienādas ar sākuma punktu koordinātēm - būvē ceļu
       while (prior != startNode) {
         path.push(prior);
         prior = previous[prior];
@@ -70,10 +70,10 @@ class Grid {
 
     // Kamēr elementu ir rindā tikmēr meklē ceļu
     while (queue.length) {
-      // Paņem elementa koordinātes
+      // Paņem elementa koordinātas
       let elementCoord = queue.shift();
 
-      // Ja elementa koordinātes ir vienādas ar beigu punktu koordinātēm ceļs ir atrasts
+      // Ja elementa koordinātas ir vienādas ar beigu punktu koordinātēm ceļs ir atrasts
       if (arrayEquals(elementCoord, endNode)) {
         return {
           path: createPath(startNode, endNode, previous),
@@ -84,7 +84,7 @@ class Grid {
 
       // Ja pārbaudītais elementCoord ir undefined atgriez false
       try {
-        // Ja elementCoord nav beigu punkts rindā(queue) pievieno elementCoord kaimiņa koordinātes
+        // Ja elementCoord nav beigu punkts rindā(queue) pievieno elementCoord kaimiņa koordinātas
         for (let i = 0; i < neighbours[elementCoord].length; i++) {
           // Ja elementCoord kaimiņš nav ticis atklāts tikai tad pievieno viņu rindā
           if (!discovered[neighbours[elementCoord][i]]) {
@@ -123,7 +123,7 @@ function createGridInDocument() {
 
   // Izveido režģā elementus grafiskajai daļai
   for (let col = 1; col <= Math.sqrt(nodeCount); col++) {
-    // Masīvs, kas saglabās elementa koordinātes
+    // Masīvs, kas saglabās elementa koordinātas
     let nodeCoordinates = [];
 
     let divCol = document.createElement("div");
@@ -178,7 +178,7 @@ function createGridInDocument() {
       divCol.append(divRow);
     }
 
-    // Saglabā šīs kollonas iterācijas elementu koordinātes
+    // Saglabā šīs kollonas iterācijas elementu koordinātas
     grid.addElement(nodeCoordinates);
 
     // Ievada kollonu ar rindām dokumenta režģī
@@ -188,7 +188,7 @@ function createGridInDocument() {
   endPoint = null;
 }
 
-// Pārbauda vai koordinātes ir iespējamas uz režģa
+// Pārbauda vai koordinātas ir iespējamas uz režģa
 function isCoordAvailable(array, coord) {
   const item_as_string = JSON.stringify(coord);
 
@@ -294,7 +294,7 @@ let loopCount = 0;
 
 // iedod katram elementam kaimiņus
 function addNeighbours() {
-  // Iespējamie kaimiņa koordinātes
+  // Iespējamie kaimiņa koordinātas
   let possibleNeighbours = [
     [0, 1], // leju
     [1, 0], // labi
@@ -306,15 +306,15 @@ function addNeighbours() {
   for (let col = 0; col < Math.sqrt(nodeCount); col++) {
     for (let row = 0; row < Math.sqrt(nodeCount); row++) {
       for (let move = 0; move < possibleNeighbours.length; move++) {
-        // aprēķina kaimiņa koordinātes saskaitot esošo elementu ar iespējamiem kaimiņiem
+        // aprēķina kaimiņa koordinātas saskaitot esošo elementu ar iespējamiem kaimiņiem
         let coord = possibleNeighbours[move].map(function (num, idx) {
           return num + grid.elementsCoord[col][row][idx];
         });
 
-        // Pārbauda vai koordinātes eksistē uz režģa
+        // Pārbauda vai koordinātas eksistē uz režģa
         for (let i = 0; i < grid.elementsCoord.length; i++) {
           if (isCoordAvailable(grid.elementsCoord[i], coord)) {
-            // Ja eksistē elementam pievieno kaimiņa koordinātes
+            // Ja eksistē elementam pievieno kaimiņa koordinātas
             grid.addNeighbour(col + 1 + "," + (row + 1), coord);
           }
         }
@@ -375,7 +375,7 @@ function start() {
       i++;
       setTimeout(() => {
         document.getElementById(coord).style.backgroundColor = color;
-        // Ja koordinātes ir vienādas ar beigu punktu beidz iekrāsot pārbaudītos elementus
+        // Ja koordinātas ir vienādas ar beigu punktu beidz iekrāsot pārbaudītos elementus
         if (coord === end.toString()) {
           colorPath(path);
           color = "#C5D1EB";
@@ -617,7 +617,7 @@ function loadGrid(e) {
 
 // Click event listener priekš katra selekcijas pogas
 $(document).on("click", ".size", function (event) {
-  // Uzrāda atbilstošos uzlādējamos režģa koordinātes
+  // Uzrāda atbilstošos uzlādējamos režģa koordinātas
   $.get(
     "loadCard.php",
     {
@@ -647,9 +647,9 @@ function createMaze(data) {
   currentSize.innerText = sValue;
 }
 
-// Dabū sķēršļu koordinātes no režģā;
+// Dabū sķēršļu koordinātas no režģā;
 function getWalls() {
-  // saglabā visas koordinātes vienā tekstā
+  // saglabā visas koordinātas vienā tekstā
   let allCoord = "";
   for (let col = 0; col < Math.sqrt(nodeCount); col++) {
     for (let row = 0; row < Math.sqrt(nodeCount); row++) {
