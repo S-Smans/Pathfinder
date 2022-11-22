@@ -1,2 +1,2 @@
 # Pathfinder
-https://s-smans.github.io/Pathfinder/
+https://sandissm.000webhostapp.com/
